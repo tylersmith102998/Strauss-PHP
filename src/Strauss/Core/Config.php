@@ -44,7 +44,23 @@ class Config
 
     public static function set($setting, $value)
     {
+        $setting = explode('.', $setting);
+        $config = &static::$config; // Pass by reference to track the depth of config values
 
+        foreach ($setting as $i)
+        {
+            if (!isset($config[$i])) $config[$i] = [];
+            $config = &$config[$i]; // Pass by reference to track depth
+        }
+
+        $config = $value;
+    }
+
+    public static function dump()
+    {
+        echo '<pre>';
+        var_dump(static::$config);
+        echo '</pre>';
     }
 
 }
