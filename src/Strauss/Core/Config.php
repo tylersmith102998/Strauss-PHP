@@ -22,4 +22,20 @@ class Config
         static::$config = array_merge(static::$config, $data);
     }
 
+    public static function get($setting)
+    {
+        $config = static::$config;
+        $setting = explode('.', $setting);
+
+        foreach ($setting as $i)
+        {
+            if (isset($config[$i]))
+            {
+                $config = $config[$i];
+            }
+        }
+
+        return $config;
+    }
+
 }
