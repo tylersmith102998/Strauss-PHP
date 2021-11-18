@@ -3,7 +3,7 @@
 function StraussAutoload($class)
 {
     $class = str_replace('\\', DS, $class);
-    echo SRC . $class . '.php';
+    //echo SRC . $class . '.php';
     @include(SRC . $class . '.php');
 }
 
