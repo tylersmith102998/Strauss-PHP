@@ -33,9 +33,18 @@ class Config
             {
                 $config = $config[$i];
             }
+            else 
+            {
+                return null;
+            }
         }
 
         return $config;
+    }
+
+    public static function set($setting, $value)
+    {
+
     }
 
 }
