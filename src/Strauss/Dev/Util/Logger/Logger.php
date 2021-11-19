@@ -44,6 +44,25 @@ class Logger implements iLogger
             $this->write_log($message);
     }
 
+    public static function getLogger()
+    {
+        try
+        {
+            $logging_type = Config::get('Strauss.Core.Logger.type');
+
+            if ($logging_type == 'file')
+                $loggerFactory = new TextLoggerFactory();
+
+            $Logger = $loggerFactory->getLogger();
+
+            return $Logger;
+        }
+        catch (\Exception $e)
+        {
+            die ("Caught exception " . $e->getMessage() . "\r\n");
+        }
+    }
+
     protected function write_log($message){}
 
 }
