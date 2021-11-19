@@ -3,6 +3,7 @@
 namespace Strauss\Core;
 
 use \Strauss\Core\Config;
+use \Strauss\Core\Routing\Router;
 use \Strauss\Dev\Util\Logger\TextLoggerFactory;
 
 class Application 
@@ -10,11 +11,13 @@ class Application
 
     public $Logger;
 
+    private $Router;
+
     public function __construct()
     {
         Config::load('strauss.core');   
         
-        try 
+        try // loading in Logger
         {
             $logging_type = Config::get('Strauss.Core.Logger.type');
 
@@ -31,6 +34,8 @@ class Application
         {
             die ("Caught exception " . $e->getMessage() . "\r\n");
         }
+
+        $this->Router = new Router($this);
     }
 
 }
