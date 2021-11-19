@@ -36,4 +36,14 @@ class Route
         return $this->path;
     }
 
+    public function getControllerName()
+    {
+        return $this->controller_name;
+    }
+
+    public function getMethodName() 
+    {
+        return $this->method_name;
+    }
+
 }
