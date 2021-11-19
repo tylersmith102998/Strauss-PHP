@@ -7,6 +7,9 @@ use \Strauss\Dev\Util\Logger\Logger;
 class Route 
 {
 
+    private $Controller;
+    private $Logger;
+
     private $path;
     private $controller_name;
     private $method_name;
@@ -31,6 +34,18 @@ class Route
         $this->Logger->debug("-- Controller: {$this->controller_name} | Method: {$this->method_name}");
     }
 
+    public function execute($params)
+    {
+        $this->Logger->debug("Attempting to execute route...");
+
+        if (!method_exists($this->Controller, $this->method_name))
+        {
+            throw new \Exception("Method [{$this->method_name}] not present in " . get_class($this->Controller));
+        }
+
+        return call_user_func_array([$this->Controller, $this->method_name], $params);
+    }
+
     public function getPath()
     {
         return $this->path;
@@ -39,6 +54,25 @@ class Route
     public function getControllerName()
     {
         return $this->controller_name;
+    }
+
+    public function getControllerObject()
+    {
+        $namespace = "Controllers\\" . $this->controller_name;
+
+        $this->Logger->debug("Attempting to instantiate controller object");
+
+        try 
+        {
+            $this->Controller = new $namespace($this);
+        }
+        catch (\Exception $e)
+        {
+            $this->Logger->error("Error instantiating controller object: " . $e->getMessage());
+            die();
+        }
+
+        return $this->Controller;
     }
 
     public function getMethodName() 

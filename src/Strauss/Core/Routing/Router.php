@@ -30,7 +30,23 @@ class Router
 
         require($file_path);
 
-        $this->detectRoute();
+        if (!$this->detectRoute())
+        {
+            Networking::redirect('/404');
+        }
+    }
+
+    public function execute()
+    {
+        if (is_object($this->Route))
+        {
+            $C = $this->Route->getControllerObject();
+            return $this->Route->execute($this->params);
+        }
+        else 
+        {
+            $this->App->Logger->error('Attempted to execute route on a non-object');
+        }
     }
 
     public static function add(\Strauss\Core\Routing\Route ...$routes)
@@ -53,12 +69,13 @@ class Router
 
             if (isset(static::$routes[$path]))
             {
-                $this->params = array_filter(explode('/', str_replace($path . '/', '', Networking::getURI())));
+                $this->params = array_filter(explode('/', str_replace($path, '', Networking::getURI())));
 
                 $this->Route = static::$routes[$path];
                 $this->App->Logger->debug("Determined route to be [{$path}]");
                 $this->App->Logger->debug("-- Controller Name: " . $this->Route->getControllerName());
                 $this->App->Logger->debug("-- Method Name: " . $this->Route->getMethodName());
+                $this->App->Logger->debug("-- Parameters: [" . implode(', ', $this->params) . "]");
                 return true;
             }
             else 
@@ -66,6 +83,10 @@ class Router
                 array_pop($attempt);
             }
         }
+
+        // Runs only if route not found.
+        $this->App->Logger->warn("Route not determined from path [" . Networking::getURI() . "]");
+        return false;
     }
 
 }

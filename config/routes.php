@@ -8,3 +8,7 @@ Router::add(
     new Route('/home',       ['Strauss.Main' => 'Index']),
     new Route('/home/index', ['Strauss.Main' => 'Index'])
 );
+
+Router::add(
+    new Route('/404', ['Strauss.Errors' => '_404'])
+);

@@ -21,6 +21,17 @@ class Application
         $this->Logger->debug('Logger instantiated.');
 
         $this->Router = new Router($this);
+
+        try 
+        {
+            $this->Router->execute();
+            $this->Logger->info("Router execution completed successfully");
+        }
+        catch (\Exception $e)
+        {
+            $this->Logger->error($e->getMessage());
+            die($e->getMessage());
+        }
     }
 
 }
