@@ -5,9 +5,10 @@ return [
         'Core' => [
 
 
-            'logging' => true,
             'Logger' => [
+                'enabled' => true,
                 'type' => 'file', // file or db
+                'level' => 'debug',
                 'DB' => [
                     'host' => 'hostname',
                     'username' => 'username',
@@ -15,7 +16,7 @@ return [
                     'db_name' => 'dbname'
                 ],
                 'File' => [
-                    'name' => 'debug.log'
+                    'name' => ROOT . 'debug.log'
                 ]
             ]
 
