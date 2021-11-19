@@ -3,6 +3,7 @@
 namespace Strauss\Dev\Util\Logger;
 
 use \Strauss\Core\Config;
+use \Strauss\Networking;
 
 class TextLogger extends Logger 
 {
@@ -42,7 +43,7 @@ class TextLogger extends Logger
     {
         $time = date("d-M-Y, h:i:s a");
 
-        fwrite($this->handle, "{$time} [" . strtoupper($this->message_type) . "] {$message}" . PHP_EOL);
+        fwrite($this->handle, "[" . Networking::getRemoteIPAddress() . "] {$time} [" . strtoupper($this->message_type) . "] {$message}" . PHP_EOL);
     }
 
 }
