@@ -12,10 +12,7 @@ class Application
 
     public function __construct()
     {
-        Config::load('strauss.core');
-
-        if (Config::get('Strauss.Core.logging'))
-            $this->Logger = new Logger();
+        Config::load('strauss.core');            
     }
 
 }

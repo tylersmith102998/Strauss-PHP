@@ -13,6 +13,9 @@ return [
                     'username' => 'username',
                     'password' => 'password',
                     'db_name' => 'dbname'
+                ],
+                'File' => [
+                    'name' => 'debug.log'
                 ]
             ]
 
