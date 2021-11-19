@@ -2,6 +2,8 @@
 
 namespace Strauss\Core\Routing;
 
+use \Strauss\Dev\Util\Logger\Logger;
+
 class Route 
 {
 
@@ -23,6 +25,10 @@ class Route
             $this->controller_name = str_replace('.', '\\', $c);
             $this->method_name = $m;
         }
+
+        $this->Logger = Logger::getLogger();
+        $this->Logger->debug("New route added for {$this->path}");
+        $this->Logger->debug("-- Controller: {$this->controller_name} | Method: {$this->method_name}");
     }
 
     public function getPath()
