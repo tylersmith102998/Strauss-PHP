@@ -14,25 +14,22 @@ class Application
     {
         Config::load('strauss.core');   
         
-        if (Config::get('Strauss.Core.Logger.enabled'))
+        try 
         {
-            try 
+            $logging_type = Config::get('Strauss.Core.Logger.type');
+
+            if ($logging_type == 'file')
             {
-                $logging_type = Config::get('Strauss.Core.Logger.type');
-
-                if ($logging_type == 'file')
-                {
-                    $loggerFactory = new TextLoggerFactory();
-                }
-
-                $this->Logger = $loggerFactory->getLogger();
-
-                $this->Logger->debug('Logger instantiated.');
+                $loggerFactory = new TextLoggerFactory();
             }
-            catch (\Exception $e)
-            {
-                die ("Caught exception " . $e->getMessage() . "\r\n");
-            }
+
+            $this->Logger = $loggerFactory->getLogger();
+
+            $this->Logger->debug('Logger instantiated.');
+        }
+        catch (\Exception $e)
+        {
+            die ("Caught exception " . $e->getMessage() . "\r\n");
         }
     }
 
