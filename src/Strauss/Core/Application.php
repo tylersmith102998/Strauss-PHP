@@ -3,36 +3,34 @@
 namespace Strauss\Core;
 
 use \Strauss\Core\Config;
-use \Strauss\Dev\Util\Logger\TextLoggerFactory;
+use \Strauss\Core\Routing\Router;
+use \Strauss\Dev\Util\Logger\Logger;
 
 class Application 
 {
 
     public $Logger;
 
+    private $Router;
+
     public function __construct()
     {
         Config::load('strauss.core');   
         
-        if (Config::get('Strauss.Core.Logger.enabled'))
+        $this->Logger = Logger::getLogger();
+        $this->Logger->debug('Logger instantiated.');
+
+        $this->Router = new Router($this);
+
+        try 
         {
-            try 
-            {
-                $logging_type = Config::get('Strauss.Core.Logger.type');
-
-                if ($logging_type == 'file')
-                {
-                    $loggerFactory = new TextLoggerFactory();
-                }
-
-                $this->Logger = $loggerFactory->getLogger();
-
-                $this->Logger->debug('Logger instantiated.');
-            }
-            catch (\Exception $e)
-            {
-                die ("Caught exception " . $e->getMessage() . "\r\n");
-            }
+            $this->Router->execute();
+            $this->Logger->info("Router execution completed successfully");
+        }
+        catch (\Exception $e)
+        {
+            $this->Logger->error($e->getMessage());
+            die($e->getMessage());
         }
     }
 

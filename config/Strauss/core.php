@@ -6,7 +6,6 @@ return [
 
 
             'Logger' => [
-                'enabled' => true,
                 'type' => 'file', // file or db
                 'level' => 'debug',
                 'DB' => [
