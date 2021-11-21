@@ -7,7 +7,7 @@ class Main extends \Strauss\Application\Controller
 
     public function Index() 
     {
-        echo 'made it';
+        $this->Model->get('Strauss.Test');
     }
 
 }
