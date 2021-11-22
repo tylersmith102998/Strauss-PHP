@@ -21,5 +21,13 @@ return [
 
 
         ]
+    ],
+
+    'DB' => [
+        'host' => '127.0.0.1',
+        'username' => 'root',
+        'password' => 'tylerboo22',
+        'db' => 'Strauss',
+        'charset' => 'utf8mb4'
     ]
 ];

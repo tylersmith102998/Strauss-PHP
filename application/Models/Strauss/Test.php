@@ -2,12 +2,19 @@
 
 namespace Models\Strauss;
 
-class Test 
+class Test extends \Strauss\Application\Model
 {
 
     public function __construct()
     {
-        echo 'got it';
+        parent::__construct();
+
+        $TUsers = $this->Table->create('users', $this);
+    }
+
+    public function table_build_users($TB)
+    {
+        echo 'build a table';
     }
 
 }
